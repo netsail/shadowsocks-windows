@@ -13,6 +13,7 @@ using Shadowsocks.Controller;
 using Shadowsocks.Model;
 using Shadowsocks.Properties;
 using Shadowsocks.Util;
+using System.Threading;
 
 namespace Shadowsocks.View
 {
@@ -86,8 +87,9 @@ namespace Shadowsocks.View
 
             this.updateChecker = new UpdateChecker();
             updateChecker.CheckUpdateCompleted += updateChecker_CheckUpdateCompleted;
-
-            LoadCurrentConfiguration();
+            //LoadCurrentConfiguration();
+            RefreshCurrentConfiguration();
+            Thread.Sleep(100);
 
             Configuration config = controller.GetConfigurationCopy();
 
@@ -96,7 +98,7 @@ namespace Shadowsocks.View
                 _isFirstRun = true;
                 ShowConfigForm();
             }
-            else if(config.autoCheckUpdate)
+            else if (config.autoCheckUpdate)
             {
                 _isStartupChecking = true;
                 updateChecker.CheckUpdate(config, 3000);
@@ -205,9 +207,9 @@ namespace Shadowsocks.View
                         {
                             Color flyBlue = Color.FromArgb(25, 125, 191);
                             // Multiply with flyBlue
-                            int red   = color.R * flyBlue.R / 255;
-                            int green = color.G * flyBlue.G / 255; 
-                            int blue  = color.B * flyBlue.B / 255;
+                            int red = color.R * flyBlue.R / 255;
+                            int green = color.G * flyBlue.G / 255;
+                            int blue = color.B * flyBlue.B / 255;
                             iconCopy.SetPixel(x, y, Color.FromArgb(color.A, red, green, blue));
                         }
                     }
@@ -284,6 +286,10 @@ namespace Shadowsocks.View
                     new MenuItem("-"),
                     this.autoCheckUpdatesToggleItem = CreateMenuItem("Check for Updates at Startup", new EventHandler(this.autoCheckUpdatesToggleItem_Click)),
                 }),
+                new MenuItem("-"),
+                CreateMenuItem("Refresh", new EventHandler(this.RefreshItem_Click)),
+                CreateMenuItem("Open Config", new EventHandler(this.OpenConfigItem_Click)),
+                 new MenuItem("-"),
                 CreateMenuItem("About...", new EventHandler(this.AboutItem_Click)),
                 new MenuItem("-"),
                 CreateMenuItem("Quit", new EventHandler(this.Quit_Click))
@@ -309,7 +315,8 @@ namespace Shadowsocks.View
             ShareOverLANItem.Checked = controller.GetConfigurationCopy().shareOverLan;
         }
 
-        void controller_VerboseLoggingStatusChanged(object sender, EventArgs e) {
+        void controller_VerboseLoggingStatusChanged(object sender, EventArgs e)
+        {
             VerboseLoggingToggleItem.Checked = controller.GetConfigurationCopy().isVerboseLogging;
         }
 
@@ -417,7 +424,7 @@ namespace Shadowsocks.View
             }
 
             // user wants a seperator item between strategy and servers menugroup
-            items.Add( i++, new MenuItem("-") );
+            items.Add(i++, new MenuItem("-"));
 
             int strategyCount = i;
             Configuration configuration = controller.GetConfigurationCopy();
@@ -568,7 +575,7 @@ namespace Shadowsocks.View
 
         private void notifyIcon1_Click(object sender, MouseEventArgs e)
         {
-            if ( e.Button == MouseButtons.Middle )
+            if (e.Button == MouseButtons.Middle)
             {
                 ShowLogForm();
             }
@@ -630,9 +637,10 @@ namespace Shadowsocks.View
             controller.SelectStrategy((string)item.Tag);
         }
 
-        private void VerboseLoggingToggleItem_Click( object sender, EventArgs e ) {
-            VerboseLoggingToggleItem.Checked = ! VerboseLoggingToggleItem.Checked;
-            controller.ToggleVerboseLogging( VerboseLoggingToggleItem.Checked );
+        private void VerboseLoggingToggleItem_Click(object sender, EventArgs e)
+        {
+            VerboseLoggingToggleItem.Checked = !VerboseLoggingToggleItem.Checked;
+            controller.ToggleVerboseLogging(VerboseLoggingToggleItem.Checked);
         }
 
         private void StatisticsConfigItem_Click(object sender, EventArgs e)
@@ -849,5 +857,35 @@ namespace Shadowsocks.View
         {
             ShowLogForm();
         }
+
+        private void RefreshItem_Click(object sender, EventArgs e)
+        {
+            RefreshCurrentConfiguration();
+        }
+
+        private void OpenConfigItem_Click(object sender, EventArgs e)
+        {
+            if (!NetSailIshadowsocks.OpenConfigFile())
+            {
+                _notifyIcon.ShowBalloonTip(60, I18N.GetString("Warm prompt"), string.Format("{0}:{1}", "Configuration file not found", I18N.GetString("Configuration file not found")), ToolTipIcon.Info);
+            }
+        }
+
+        private async void RefreshCurrentConfiguration()
+        {
+            NetSailIshadowsocks netSailIshadowsocks = new NetSailIshadowsocks(controller);
+            string htmlContent = await netSailIshadowsocks.AccessTheWebAsync();
+            if (netSailIshadowsocks.SaveServers(htmlContent))
+            {
+                this.controller = netSailIshadowsocks.controller;
+                LoadCurrentConfiguration();
+                _notifyIcon.ShowBalloonTip(60, I18N.GetString("Warm prompt"), string.Format("{0}:{1}:{2}", netSailIshadowsocks.controller.GetCurrentServer().remarks, netSailIshadowsocks.controller.GetCurrentServer().server, I18N.GetString("The network configuration has been refreshed")), ToolTipIcon.Info);
+            }
+            else
+            {
+                _notifyIcon.ShowBalloonTip(60, I18N.GetString("Warm prompt"), string.Format("{0}:{1}", "Request remote iss fail", I18N.GetString("Configuration file download error")), ToolTipIcon.Info);
+            }
+        }
+
     }
 }
