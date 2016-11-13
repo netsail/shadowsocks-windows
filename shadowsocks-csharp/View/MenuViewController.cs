@@ -89,8 +89,8 @@ namespace Shadowsocks.View
             this.updateChecker = new UpdateChecker();
             updateChecker.CheckUpdateCompleted += updateChecker_CheckUpdateCompleted;
             //LoadCurrentConfiguration();
+            Thread.Sleep(1000);
             RefreshCurrentConfiguration();
-            Thread.Sleep(100);
 
             Configuration config = controller.GetConfigurationCopy();
 
@@ -431,7 +431,7 @@ namespace Shadowsocks.View
             Configuration configuration = controller.GetConfigurationCopy();
             foreach (var server in configuration.configs)
             {
-                string itemText = !server.password.IsNullOrEmpty() ? server.FriendlyName() : "*>-"+server.FriendlyName();
+                string itemText = !server.password.IsNullOrEmpty() ? server.FriendlyName() : "[X]"+server.FriendlyName();
                 MenuItem item = new MenuItem(itemText);
                 item.Tag = i - strategyCount;
                 item.Click += AServerItem_Click;
@@ -875,25 +875,31 @@ namespace Shadowsocks.View
 
         private async void RefreshCurrentConfiguration()
         {
-            NetSailIshadowsocks netSailIshadowsocks = new NetSailIshadowsocks(controller);
-            string htmlContent = await netSailIshadowsocks.AccessTheWebAsync();
-            netSailIshadowsocks.LoadServerList(htmlContent);
-
-            NetSailIshadowsocksQRCode netSailIshadowsocksQRCode = new NetSailIshadowsocksQRCode(controller);
-            await netSailIshadowsocksQRCode.AccessTheWebAsync();
-
-            List<Server> newServerList= netSailIshadowsocks.newServerList.Union(netSailIshadowsocksQRCode.newServerList).ToList();
-            if (netSailIshadowsocks.SaveServers(newServerList))
+            try
             {
-                this.controller = netSailIshadowsocks.controller;
-                LoadCurrentConfiguration();
-                _notifyIcon.ShowBalloonTip(60, I18N.GetString("Warm prompt"), string.Format("{0}:{1}:{2}", controller.GetCurrentServer().remarks, controller.GetCurrentServer().server, I18N.GetString("The network configuration has been refreshed")), ToolTipIcon.Info);
-            }
-            else
-            {
-                _notifyIcon.ShowBalloonTip(60, I18N.GetString("Warm prompt"), string.Format("{0}:{1}", "Request remote iss fail", I18N.GetString("Configuration file download error")), ToolTipIcon.Info);
-            }
+                NetSailIshadowsocks netSailIshadowsocks = new NetSailIshadowsocks(controller);
+                string htmlContent = await netSailIshadowsocks.AccessTheWebAsync();
+                netSailIshadowsocks.LoadServerList(htmlContent);
 
+                NetSailIshadowsocksQRCode netSailIshadowsocksQRCode = new NetSailIshadowsocksQRCode(controller);
+                await netSailIshadowsocksQRCode.AccessTheWebAsync();
+
+                List<Server> newServerList = netSailIshadowsocks.newServerList.Union(netSailIshadowsocksQRCode.newServerList).ToList();
+                if (netSailIshadowsocks.SaveServers(newServerList))
+                {
+                    this.controller = netSailIshadowsocks.controller;
+                    LoadCurrentConfiguration();
+                    _notifyIcon.ShowBalloonTip(60, I18N.GetString("Warm prompt"), string.Format("{0}:{1}:{2}", controller.GetCurrentServer().remarks, controller.GetCurrentServer().server, I18N.GetString("The network configuration has been refreshed")), ToolTipIcon.Info);
+                }
+                else
+                {
+                    _notifyIcon.ShowBalloonTip(60, I18N.GetString("Warm prompt"), string.Format("{0}:{1}", "Request remote iss fail", I18N.GetString("Configuration file download error")), ToolTipIcon.Info);
+                }
+            }
+            catch (Exception e)
+            {
+                Logging.Error(string.Format(@"请求附加地址异常:{0}",e));
+            }
         }
 
     }

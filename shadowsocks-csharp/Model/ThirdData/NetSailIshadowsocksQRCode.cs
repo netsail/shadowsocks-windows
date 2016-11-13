@@ -13,7 +13,7 @@ using ZXing.QrCode;
 
 /// <summary>
 /// http get iss config from QRCode
-/// auth hezhifang
+/// auth netsail
 /// time 2016-11-13 00:00
 /// </summary>
 namespace Shadowsocks.Model

@@ -10,7 +10,7 @@ using Shadowsocks.Model.ThirdData;
 
 /// <summary>
 /// http get iss config
-/// auth hezhifang
+/// auth netsail
 /// time 2016-10-29 00:00
 /// </summary>
 namespace Shadowsocks.Model
