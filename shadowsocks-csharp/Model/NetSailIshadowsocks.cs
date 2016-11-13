@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Net.Http;
 using System;
 using System.Globalization;
+using System.Linq;
 
 /// <summary>
 /// http get iss config
@@ -119,7 +120,9 @@ namespace Shadowsocks.Model
             {
                 List<Server> list = GetServerList(html);
                 if (list == null || list.Count == 0) return false;
-                controller.SaveServers(list, config.localPort);
+                NetSailServerCompare netSailServerCompare = new NetSailServerCompare();
+                var servers=config.configs.Union(list).Distinct(netSailServerCompare).ToList(); //config去掉重复的服务名称
+                controller.SaveServers(servers, config.localPort);
             }
             catch (Exception e)
             {
