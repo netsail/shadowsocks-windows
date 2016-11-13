@@ -14,6 +14,7 @@ using Shadowsocks.Model;
 using Shadowsocks.Properties;
 using Shadowsocks.Util;
 using System.Threading;
+using System.Linq;
 
 namespace Shadowsocks.View
 {
@@ -430,7 +431,8 @@ namespace Shadowsocks.View
             Configuration configuration = controller.GetConfigurationCopy();
             foreach (var server in configuration.configs)
             {
-                MenuItem item = new MenuItem(server.FriendlyName());
+                string itemText = !server.password.IsNullOrEmpty() ? server.FriendlyName() : "*>-"+server.FriendlyName();
+                MenuItem item = new MenuItem(itemText);
                 item.Tag = i - strategyCount;
                 item.Click += AServerItem_Click;
                 items.Add(i, item);
@@ -875,16 +877,23 @@ namespace Shadowsocks.View
         {
             NetSailIshadowsocks netSailIshadowsocks = new NetSailIshadowsocks(controller);
             string htmlContent = await netSailIshadowsocks.AccessTheWebAsync();
-            if (netSailIshadowsocks.SaveServers(htmlContent))
+            netSailIshadowsocks.LoadServerList(htmlContent);
+
+            NetSailIshadowsocksQRCode netSailIshadowsocksQRCode = new NetSailIshadowsocksQRCode(controller);
+            await netSailIshadowsocksQRCode.AccessTheWebAsync();
+
+            List<Server> newServerList= netSailIshadowsocks.newServerList.Union(netSailIshadowsocksQRCode.newServerList).ToList();
+            if (netSailIshadowsocks.SaveServers(newServerList))
             {
                 this.controller = netSailIshadowsocks.controller;
                 LoadCurrentConfiguration();
-                _notifyIcon.ShowBalloonTip(60, I18N.GetString("Warm prompt"), string.Format("{0}:{1}:{2}", netSailIshadowsocks.controller.GetCurrentServer().remarks, netSailIshadowsocks.controller.GetCurrentServer().server, I18N.GetString("The network configuration has been refreshed")), ToolTipIcon.Info);
+                _notifyIcon.ShowBalloonTip(60, I18N.GetString("Warm prompt"), string.Format("{0}:{1}:{2}", controller.GetCurrentServer().remarks, controller.GetCurrentServer().server, I18N.GetString("The network configuration has been refreshed")), ToolTipIcon.Info);
             }
             else
             {
                 _notifyIcon.ShowBalloonTip(60, I18N.GetString("Warm prompt"), string.Format("{0}:{1}", "Request remote iss fail", I18N.GetString("Configuration file download error")), ToolTipIcon.Info);
             }
+
         }
 
     }

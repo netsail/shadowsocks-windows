@@ -40,6 +40,8 @@
             this.EncryptionLabel = new System.Windows.Forms.Label();
             this.EncryptionSelect = new System.Windows.Forms.ComboBox();
             this.OneTimeAuth = new System.Windows.Forms.CheckBox();
+            this.TimeoutLabel = new System.Windows.Forms.Label();
+            this.TimeoutTextBox = new System.Windows.Forms.TextBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.OKButton = new System.Windows.Forms.Button();
             this.MyCancelButton = new System.Windows.Forms.Button();
@@ -57,8 +59,6 @@
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.DuplicateButton = new System.Windows.Forms.Button();
-            this.TimeoutLabel = new System.Windows.Forms.Label();
-            this.TimeoutTextBox = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.ServerGroupBox.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -232,6 +232,26 @@
             this.OneTimeAuth.TabIndex = 5;
             this.OneTimeAuth.Text = "Onetime Authentication";
             this.OneTimeAuth.UseVisualStyleBackColor = true;
+            // 
+            // TimeoutLabel
+            // 
+            this.TimeoutLabel.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.TimeoutLabel.AutoSize = true;
+            this.TimeoutLabel.Location = new System.Drawing.Point(6, 144);
+            this.TimeoutLabel.Name = "TimeoutLabel";
+            this.TimeoutLabel.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.TimeoutLabel.Size = new System.Drawing.Size(77, 12);
+            this.TimeoutLabel.TabIndex = 10;
+            this.TimeoutLabel.Text = "Timeout(Sec)";
+            // 
+            // TimeoutTextBox
+            // 
+            this.TimeoutTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.TimeoutTextBox.Location = new System.Drawing.Point(89, 140);
+            this.TimeoutTextBox.MaxLength = 5;
+            this.TimeoutTextBox.Name = "TimeoutTextBox";
+            this.TimeoutTextBox.Size = new System.Drawing.Size(160, 21);
+            this.TimeoutTextBox.TabIndex = 11;
             // 
             // panel2
             // 
@@ -477,26 +497,6 @@
             this.DuplicateButton.Text = "Dupli&cate";
             this.DuplicateButton.UseVisualStyleBackColor = true;
             this.DuplicateButton.Click += new System.EventHandler(this.DuplicateButton_Click);
-            // 
-            // TimeoutLabel
-            // 
-            this.TimeoutLabel.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.TimeoutLabel.AutoSize = true;
-            this.TimeoutLabel.Location = new System.Drawing.Point(6, 144);
-            this.TimeoutLabel.Name = "TimeoutLabel";
-            this.TimeoutLabel.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.TimeoutLabel.Size = new System.Drawing.Size(77, 12);
-            this.TimeoutLabel.TabIndex = 10;
-            this.TimeoutLabel.Text = "Timeout(Sec)";
-            // 
-            // TimeoutTextBox
-            // 
-            this.TimeoutTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.TimeoutTextBox.Location = new System.Drawing.Point(89, 140);
-            this.TimeoutTextBox.MaxLength = 5;
-            this.TimeoutTextBox.Name = "TimeoutTextBox";
-            this.TimeoutTextBox.Size = new System.Drawing.Size(160, 21);
-            this.TimeoutTextBox.TabIndex = 11;
             // 
             // ConfigForm
             // 

@@ -141,8 +141,10 @@
     <Compile Include="3rd\zxing\ResultPointCallback.cs" />
     <Compile Include="3rd\zxing\WriterException.cs" />
     <Compile Include="Model\HotKeyConfig.cs" />
-    <Compile Include="Model\NetSailIshadowsocks.cs" />
-    <Compile Include="Model\NetSailServerCompare.cs" />
+    <Compile Include="Model\ThirdData\AstractIshadowsocks.cs" />
+    <Compile Include="Model\ThirdData\NetSailIshadowsocks.cs" />
+    <Compile Include="Model\ThirdData\NetSailIshadowsocksQRCode.cs" />
+    <Compile Include="Model\ThirdData\NetSailServerCompare.cs" />
     <Compile Include="Model\ProxyConfig.cs" />
     <Compile Include="Proxy\DirectConnect.cs" />
     <Compile Include="Proxy\HttpProxy.cs" />

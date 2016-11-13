@@ -6,6 +6,7 @@ using System.Net.Http;
 using System;
 using System.Globalization;
 using System.Linq;
+using Shadowsocks.Model.ThirdData;
 
 /// <summary>
 /// http get iss config
@@ -14,21 +15,17 @@ using System.Linq;
 /// </summary>
 namespace Shadowsocks.Model
 {
-    class NetSailIshadowsocks
+    class NetSailIshadowsocks: AstractIshadowsocks
     {
         const string ISS_DEFAULT_URL = "http://www.ishadowsocks.net/";
         const int ISS_SERVER_NUM = 3;
         const string ISS_USER_AGENT = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.112 Safari/537.36";
-        private static string CONFIG_FILE = "gui-config.json";
+        
         public NetSailIshadowsocks(ShadowsocksController controller)
         {
             this.controller = controller;
-            this.config = this.controller.GetConfigurationCopy();
+            config = this.controller.GetConfigurationCopy();
         }
-        public ShadowsocksController controller { get; set; }
-
-        public Configuration config { get; set; }
-
         private string GetMatchData(string regex, string content, int index)
         {
             // Regex regex2 = new Regex(regex, RegexOptions.Singleline);
@@ -46,10 +43,10 @@ namespace Shadowsocks.Model
             return match.Groups[1].Value;
         }
 
-        public List<Server> GetServerList(string html)
+        public  List<Server> LoadServerList(string html)
         {
             if (html.IsNullOrEmpty()) return null;
-            List<Server> list = new List<Server>();
+           this.newServerList= new List<Server>();
             DateTimeFormatInfo provider = new DateTimeFormatInfo
             {
                 LongDatePattern = "yyyy-MM-dd hh:mm:ss"
@@ -59,19 +56,18 @@ namespace Shadowsocks.Model
                 DateTime maxUpdateTime = DateTime.Now;
                 for (int i = 0; i < ISS_SERVER_NUM; i++)
                 {
-                    DateTime updateTime = DateTime.Now;
+                    
                     Server item = new Server
                     {
                         server = GetMatchData(@"<h4>[\s\S]服务器地址:([\s\S]*?)<\/h4>", html, i + 1).ToUpper(),
                         password = GetMatchData(@"<h4>[\s\S]密码:([\s\S]*?)<\/h4>", html, i + 1),
                         server_port = int.Parse(GetMatchData(@"<h4>端口:([\s\S]*?)<\/h4>", html, i + 1)),
                         method = GetMatchData(@"<h4>加密方式:([\s\S]*?)<\/h4>", html, i + 1).ToUpper(),
-                        remarks = updateTime.ToString("yyyy-MM-dd HH:mm:ss"),
+                        remarks= DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
                     };
-                    if (this.config.configs.Count > i)
+                    this.MarkConfigNewTime(item);
+                    if (config.configs.Count > i)
                     {
-                        item.remarks = ((this.config.configs[i].password != item.password)) ? item.remarks : this.config.configs[i].remarks; ;
-
                         //设置更新时间最大的为默认配置
                         if (DateTime.Compare(Convert.ToDateTime(item.remarks, provider), maxUpdateTime) <= 0)
                         {
@@ -80,10 +76,10 @@ namespace Shadowsocks.Model
                         }
                     }
 
-                    list.Add(item);
+                    newServerList.Add(item);
                 }
             }
-            return list;
+            return newServerList;
         }
 
         public async Task<string> AccessTheWebAsync()
@@ -112,31 +108,6 @@ namespace Shadowsocks.Model
             }
             //  return 语句表明返回一个整数.
             return responseContents;
-        }
-
-        public Boolean SaveServers(String html)
-        {
-            try
-            {
-                List<Server> list = GetServerList(html);
-                if (list == null || list.Count == 0) return false;
-                NetSailServerCompare netSailServerCompare = new NetSailServerCompare();
-                var servers=config.configs.Union(list).Distinct(netSailServerCompare).ToList(); //config去掉重复的服务名称
-                controller.SaveServers(servers, config.localPort);
-            }
-            catch (Exception e)
-            {
-                Logging.Error(string.Format("Refresh config file error:{0}", e));
-            }
-            return true;
-        }
-
-        public static Boolean OpenConfigFile()
-        {
-            if (!System.IO.File.Exists(CONFIG_FILE)) return false;
-            System.Diagnostics.ProcessStartInfo Info = new System.Diagnostics.ProcessStartInfo(CONFIG_FILE);
-            System.Diagnostics.Process Pro = System.Diagnostics.Process.Start(Info);
-            return true;
         }
 
         //public Boolean checkChangedConfig()
