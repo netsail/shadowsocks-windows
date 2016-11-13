@@ -47,6 +47,8 @@
             this.ShowLogsTextBox = new System.Windows.Forms.TextBox();
             this.ServerMoveUpTextBox = new System.Windows.Forms.TextBox();
             this.ServerMoveDownTextBox = new System.Windows.Forms.TextBox();
+            this.RefreshIssConfigTextBox = new System.Windows.Forms.TextBox();
+            this.RefreshIssConfigLabel = new System.Windows.Forms.Label();
             flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             flowLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -59,7 +61,7 @@
             flowLayoutPanel1.Controls.Add(this.btnCancel);
             flowLayoutPanel1.Controls.Add(this.btnRegisterAll);
             flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.BottomUp;
-            flowLayoutPanel1.Location = new System.Drawing.Point(0, 227);
+            flowLayoutPanel1.Location = new System.Drawing.Point(0, 226);
             flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
             flowLayoutPanel1.Padding = new System.Windows.Forms.Padding(0, 0, 16, 0);
@@ -112,7 +114,7 @@
             this.tableLayoutPanel1.Controls.Add(this.ShowLogsLabel, 0, 4);
             this.tableLayoutPanel1.Controls.Add(this.ServerMoveUpLabel, 0, 5);
             this.tableLayoutPanel1.Controls.Add(this.ServerMoveDownLabel, 0, 6);
-            this.tableLayoutPanel1.Controls.Add(flowLayoutPanel1, 0, 7);
+            this.tableLayoutPanel1.Controls.Add(flowLayoutPanel1, 0, 8);
             this.tableLayoutPanel1.Controls.Add(this.SwitchSystemProxyTextBox, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.ChangeToPacTextBox, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.ChangeToGlobalTextBox, 1, 2);
@@ -120,18 +122,22 @@
             this.tableLayoutPanel1.Controls.Add(this.ShowLogsTextBox, 1, 4);
             this.tableLayoutPanel1.Controls.Add(this.ServerMoveUpTextBox, 1, 5);
             this.tableLayoutPanel1.Controls.Add(this.ServerMoveDownTextBox, 1, 6);
+            this.tableLayoutPanel1.Controls.Add(this.RefreshIssConfigTextBox, 1, 7);
+            this.tableLayoutPanel1.Controls.Add(this.RefreshIssConfigLabel, 0, 7);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 8;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.16667F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.16667F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.16667F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.16667F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.16667F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.77778F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.38889F));
+            this.tableLayoutPanel1.RowCount = 9;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.4084F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.4084F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.4084F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.4084F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.4084F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.94366F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.60304F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.41131F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(475, 271);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
@@ -142,7 +148,7 @@
             this.SwitchSystemProxyLabel.Location = new System.Drawing.Point(25, 0);
             this.SwitchSystemProxyLabel.Margin = new System.Windows.Forms.Padding(8, 0, 8, 0);
             this.SwitchSystemProxyLabel.Name = "SwitchSystemProxyLabel";
-            this.SwitchSystemProxyLabel.Size = new System.Drawing.Size(147, 32);
+            this.SwitchSystemProxyLabel.Size = new System.Drawing.Size(147, 28);
             this.SwitchSystemProxyLabel.TabIndex = 0;
             this.SwitchSystemProxyLabel.Text = "Enable System Proxy";
             this.SwitchSystemProxyLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -151,10 +157,10 @@
             // 
             this.ChangeToPacLabel.AutoSize = true;
             this.ChangeToPacLabel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.ChangeToPacLabel.Location = new System.Drawing.Point(135, 32);
+            this.ChangeToPacLabel.Location = new System.Drawing.Point(135, 28);
             this.ChangeToPacLabel.Margin = new System.Windows.Forms.Padding(8, 0, 8, 0);
             this.ChangeToPacLabel.Name = "ChangeToPacLabel";
-            this.ChangeToPacLabel.Size = new System.Drawing.Size(37, 32);
+            this.ChangeToPacLabel.Size = new System.Drawing.Size(37, 28);
             this.ChangeToPacLabel.TabIndex = 1;
             this.ChangeToPacLabel.Text = "PAC";
             this.ChangeToPacLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -163,10 +169,10 @@
             // 
             this.ChangeToGlobalLabel.AutoSize = true;
             this.ChangeToGlobalLabel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.ChangeToGlobalLabel.Location = new System.Drawing.Point(119, 64);
+            this.ChangeToGlobalLabel.Location = new System.Drawing.Point(119, 56);
             this.ChangeToGlobalLabel.Margin = new System.Windows.Forms.Padding(8, 0, 8, 0);
             this.ChangeToGlobalLabel.Name = "ChangeToGlobalLabel";
-            this.ChangeToGlobalLabel.Size = new System.Drawing.Size(53, 32);
+            this.ChangeToGlobalLabel.Size = new System.Drawing.Size(53, 28);
             this.ChangeToGlobalLabel.TabIndex = 2;
             this.ChangeToGlobalLabel.Text = "Global";
             this.ChangeToGlobalLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -175,10 +181,10 @@
             // 
             this.SwitchAllowLanLabel.AutoSize = true;
             this.SwitchAllowLanLabel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.SwitchAllowLanLabel.Location = new System.Drawing.Point(8, 96);
+            this.SwitchAllowLanLabel.Location = new System.Drawing.Point(8, 84);
             this.SwitchAllowLanLabel.Margin = new System.Windows.Forms.Padding(8, 0, 8, 0);
             this.SwitchAllowLanLabel.Name = "SwitchAllowLanLabel";
-            this.SwitchAllowLanLabel.Size = new System.Drawing.Size(164, 32);
+            this.SwitchAllowLanLabel.Size = new System.Drawing.Size(164, 28);
             this.SwitchAllowLanLabel.TabIndex = 3;
             this.SwitchAllowLanLabel.Text = "Allow Clients from LAN";
             this.SwitchAllowLanLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -187,10 +193,10 @@
             // 
             this.ShowLogsLabel.AutoSize = true;
             this.ShowLogsLabel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.ShowLogsLabel.Location = new System.Drawing.Point(82, 128);
+            this.ShowLogsLabel.Location = new System.Drawing.Point(82, 112);
             this.ShowLogsLabel.Margin = new System.Windows.Forms.Padding(8, 0, 8, 0);
             this.ShowLogsLabel.Name = "ShowLogsLabel";
-            this.ShowLogsLabel.Size = new System.Drawing.Size(90, 32);
+            this.ShowLogsLabel.Size = new System.Drawing.Size(90, 28);
             this.ShowLogsLabel.TabIndex = 4;
             this.ShowLogsLabel.Text = "Show Logs...";
             this.ShowLogsLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -199,10 +205,10 @@
             // 
             this.ServerMoveUpLabel.AutoSize = true;
             this.ServerMoveUpLabel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.ServerMoveUpLabel.Location = new System.Drawing.Point(103, 160);
+            this.ServerMoveUpLabel.Location = new System.Drawing.Point(103, 140);
             this.ServerMoveUpLabel.Margin = new System.Windows.Forms.Padding(8, 0, 8, 0);
             this.ServerMoveUpLabel.Name = "ServerMoveUpLabel";
-            this.ServerMoveUpLabel.Size = new System.Drawing.Size(69, 34);
+            this.ServerMoveUpLabel.Size = new System.Drawing.Size(69, 29);
             this.ServerMoveUpLabel.TabIndex = 4;
             this.ServerMoveUpLabel.Text = "Move up";
             this.ServerMoveUpLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -211,10 +217,10 @@
             // 
             this.ServerMoveDownLabel.AutoSize = true;
             this.ServerMoveDownLabel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.ServerMoveDownLabel.Location = new System.Drawing.Point(81, 194);
+            this.ServerMoveDownLabel.Location = new System.Drawing.Point(81, 169);
             this.ServerMoveDownLabel.Margin = new System.Windows.Forms.Padding(8, 0, 8, 0);
             this.ServerMoveDownLabel.Name = "ServerMoveDownLabel";
-            this.ServerMoveDownLabel.Size = new System.Drawing.Size(91, 33);
+            this.ServerMoveDownLabel.Size = new System.Drawing.Size(91, 29);
             this.ServerMoveDownLabel.TabIndex = 4;
             this.ServerMoveDownLabel.Text = "Move Down";
             this.ServerMoveDownLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -235,7 +241,7 @@
             // ChangeToPacTextBox
             // 
             this.ChangeToPacTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ChangeToPacTextBox.Location = new System.Drawing.Point(183, 35);
+            this.ChangeToPacTextBox.Location = new System.Drawing.Point(183, 31);
             this.ChangeToPacTextBox.Margin = new System.Windows.Forms.Padding(3, 3, 16, 3);
             this.ChangeToPacTextBox.Name = "ChangeToPacTextBox";
             this.ChangeToPacTextBox.ReadOnly = true;
@@ -248,7 +254,7 @@
             // ChangeToGlobalTextBox
             // 
             this.ChangeToGlobalTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ChangeToGlobalTextBox.Location = new System.Drawing.Point(183, 67);
+            this.ChangeToGlobalTextBox.Location = new System.Drawing.Point(183, 59);
             this.ChangeToGlobalTextBox.Margin = new System.Windows.Forms.Padding(3, 3, 16, 3);
             this.ChangeToGlobalTextBox.Name = "ChangeToGlobalTextBox";
             this.ChangeToGlobalTextBox.ReadOnly = true;
@@ -261,7 +267,7 @@
             // SwitchAllowLanTextBox
             // 
             this.SwitchAllowLanTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SwitchAllowLanTextBox.Location = new System.Drawing.Point(183, 99);
+            this.SwitchAllowLanTextBox.Location = new System.Drawing.Point(183, 87);
             this.SwitchAllowLanTextBox.Margin = new System.Windows.Forms.Padding(3, 3, 16, 3);
             this.SwitchAllowLanTextBox.Name = "SwitchAllowLanTextBox";
             this.SwitchAllowLanTextBox.ReadOnly = true;
@@ -274,7 +280,7 @@
             // ShowLogsTextBox
             // 
             this.ShowLogsTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ShowLogsTextBox.Location = new System.Drawing.Point(183, 131);
+            this.ShowLogsTextBox.Location = new System.Drawing.Point(183, 115);
             this.ShowLogsTextBox.Margin = new System.Windows.Forms.Padding(3, 3, 16, 3);
             this.ShowLogsTextBox.Name = "ShowLogsTextBox";
             this.ShowLogsTextBox.ReadOnly = true;
@@ -287,7 +293,7 @@
             // ServerMoveUpTextBox
             // 
             this.ServerMoveUpTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ServerMoveUpTextBox.Location = new System.Drawing.Point(183, 163);
+            this.ServerMoveUpTextBox.Location = new System.Drawing.Point(183, 143);
             this.ServerMoveUpTextBox.Margin = new System.Windows.Forms.Padding(3, 3, 16, 3);
             this.ServerMoveUpTextBox.Name = "ServerMoveUpTextBox";
             this.ServerMoveUpTextBox.ReadOnly = true;
@@ -300,7 +306,7 @@
             // ServerMoveDownTextBox
             // 
             this.ServerMoveDownTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ServerMoveDownTextBox.Location = new System.Drawing.Point(183, 197);
+            this.ServerMoveDownTextBox.Location = new System.Drawing.Point(183, 172);
             this.ServerMoveDownTextBox.Margin = new System.Windows.Forms.Padding(3, 3, 16, 3);
             this.ServerMoveDownTextBox.Name = "ServerMoveDownTextBox";
             this.ServerMoveDownTextBox.ReadOnly = true;
@@ -309,6 +315,31 @@
             this.ServerMoveDownTextBox.TextChanged += new System.EventHandler(this.TextBox_TextChanged);
             this.ServerMoveDownTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.HotkeyDown);
             this.ServerMoveDownTextBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.HotkeyUp);
+            // 
+            // RefreshIssConfigTextBox
+            // 
+            this.RefreshIssConfigTextBox.BackColor = System.Drawing.SystemColors.Control;
+            this.RefreshIssConfigTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.RefreshIssConfigTextBox.Location = new System.Drawing.Point(183, 201);
+            this.RefreshIssConfigTextBox.Margin = new System.Windows.Forms.Padding(3, 3, 16, 3);
+            this.RefreshIssConfigTextBox.Name = "RefreshIssConfigTextBox";
+            this.RefreshIssConfigTextBox.Size = new System.Drawing.Size(276, 25);
+            this.RefreshIssConfigTextBox.TabIndex = 14;
+            this.RefreshIssConfigTextBox.TextChanged += new System.EventHandler(this.TextBox_TextChanged);
+            this.RefreshIssConfigTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.HotkeyDown);
+            this.RefreshIssConfigTextBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.HotkeyUp);
+            // 
+            // RefreshIssConfigLabel
+            // 
+            this.RefreshIssConfigLabel.AutoSize = true;
+            this.RefreshIssConfigLabel.Dock = System.Windows.Forms.DockStyle.Right;
+            this.RefreshIssConfigLabel.Location = new System.Drawing.Point(44, 198);
+            this.RefreshIssConfigLabel.Margin = new System.Windows.Forms.Padding(8, 0, 8, 0);
+            this.RefreshIssConfigLabel.Name = "RefreshIssConfigLabel";
+            this.RefreshIssConfigLabel.Size = new System.Drawing.Size(128, 28);
+            this.RefreshIssConfigLabel.TabIndex = 15;
+            this.RefreshIssConfigLabel.Text = "Refresh Iss Config";
+            this.RefreshIssConfigLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // HotkeySettingsForm
             // 
@@ -350,5 +381,7 @@
         private System.Windows.Forms.TextBox ServerMoveDownTextBox;
         private System.Windows.Forms.Button btnRegisterAll;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.TextBox RefreshIssConfigTextBox;
+        private System.Windows.Forms.Label RefreshIssConfigLabel;
     }
 }

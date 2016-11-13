@@ -18,6 +18,7 @@ namespace Shadowsocks.Model
         public string ShowLogs;
         public string ServerMoveUp;
         public string ServerMoveDown;
+        public string RefreshIssConfig;
 
         public HotkeyConfig()
         {
@@ -28,6 +29,7 @@ namespace Shadowsocks.Model
             ShowLogs = "";
             ServerMoveUp = "";
             ServerMoveDown = "";
+            RefreshIssConfig = "";
         }
     }
 }

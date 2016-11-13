@@ -63,6 +63,7 @@ namespace Shadowsocks.View
             ShowLogsTextBox.Text = config.ShowLogs;
             ServerMoveUpTextBox.Text = config.ServerMoveUp;
             ServerMoveDownTextBox.Text = config.ServerMoveDown;
+            RefreshIssConfigTextBox.Text = config.RefreshIssConfig;
         }
 
         private void UpdateTexts()
@@ -243,6 +244,7 @@ namespace Shadowsocks.View
             _modifiedConfig.ShowLogs = ShowLogsTextBox.Text;
             _modifiedConfig.ServerMoveUp = ServerMoveUpTextBox.Text;
             _modifiedConfig.ServerMoveDown = ServerMoveDownTextBox.Text;
+            _modifiedConfig.RefreshIssConfig = RefreshIssConfigTextBox.Text;
             _controller.SaveHotkeyConfig(_modifiedConfig);
         }
 
@@ -317,6 +319,13 @@ namespace Shadowsocks.View
                 currIndex += 1;
             }
             _controller.SelectServerIndex(currIndex);
+        }
+
+        private void RefreshIssConfigCallback()
+        {
+            NetSailIshadowsocks netSailIshadowsocks = new NetSailIshadowsocks(this._controller);
+            //netSailIshadowsocks.AccessTheWebAsync();
+
         }
 
         private void GetCurrServerInfo(out int currIndex, out int serverCount)
