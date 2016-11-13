@@ -46,11 +46,21 @@ namespace Shadowsocks.Model.ThirdData
 
         public void MarkConfigNewTime(Server item)
         {
-            if (config.configs.Count > 1 && item != null)
+            try
             {
-                Server oldServer = config.configs.Where(m => m.server == item.server).First();
-                item.remarks = ((oldServer != null && oldServer.password != item.password)) ? item.remarks : oldServer.remarks;
+                if (config.configs.Count > 1 && item != null)
+                {
+                    var collection = config.configs.Where(m => m.server == item.server);
+                    if (collection == null) return;
+                    Server oldServer = collection.First();
+                    item.remarks = ((oldServer != null && oldServer.password != item.password)) ? item.remarks : oldServer.remarks;
+                }
             }
+            catch (Exception e)
+            {
+                Logging.Error(string.Format("Mark new time {0} error:{1}", item.server, e));
+            }
+
         }
 
     }
