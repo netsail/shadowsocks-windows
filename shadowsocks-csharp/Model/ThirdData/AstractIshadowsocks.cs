@@ -26,7 +26,7 @@ namespace Shadowsocks.Model.ThirdData
             {
                 if (list == null || list.Count == 0) return false;
                 NetSailServerCompare netSailServerCompare = new NetSailServerCompare();
-                var servers = config.configs.Union(list).Distinct(netSailServerCompare).ToList(); //config去掉重复的服务名称
+                var servers = list.Union(config.configs).Distinct(netSailServerCompare).ToList(); //config去掉重复的服务名称
                 controller.SaveServers(servers, config.localPort);
             }
             catch (Exception e)
@@ -62,6 +62,8 @@ namespace Shadowsocks.Model.ThirdData
             }
 
         }
+
+
 
     }
 }
